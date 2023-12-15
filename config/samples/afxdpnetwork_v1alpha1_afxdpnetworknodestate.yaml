@@ -1,0 +1,12 @@
+apiVersion: hns.dev/v1alpha1
+kind: AfxdpNetworkNodeState
+metadata:
+  labels:
+    app.kubernetes.io/name: afxdpnetworknodestate
+    app.kubernetes.io/instance: afxdpnetworknodestate-sample
+    app.kubernetes.io/part-of: afxdp-network-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: afxdp-network-operator
+  name: afxdpnetworknodestate-sample
+spec:
+  # TODO(user): Add fields here

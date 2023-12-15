@@ -1,0 +1,9 @@
+## Append samples you want in your CSV to this file as resources ##
+resources:
+- afxdpnetwork_v1alpha1_afxdp.yaml
+- afxdpnetwork_v1alpha1_afxdpnetwork.yaml
+- afxdpnetwork_v1alpha1_afxdpnetworknodepolicy.yaml
+- afxdpnetwork_v1alpha1_afxdpnetworknodestate.yaml
+- afxdpnetwork_v1alpha1_afxdpnetworkpoolconfig.yaml
+- afxdpnetwork_v1alpha1_afxdpoperatorconfig.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

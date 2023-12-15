@@ -1,0 +1,111 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworknodepolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworknodepolicies/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworknodepolicies/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworknodestates
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworknodestates/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworknodestates/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworks/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpnetworks/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpoperatorconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpoperatorconfigs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpoperatorconfigs/status
+  verbs:
+  - get
+  - patch
+  - update

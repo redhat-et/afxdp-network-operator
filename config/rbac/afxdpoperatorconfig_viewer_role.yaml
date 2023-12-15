@@ -1,0 +1,27 @@
+# permissions for end users to view afxdpoperatorconfigs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: afxdpoperatorconfig-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: afxdp-network-operator
+    app.kubernetes.io/part-of: afxdp-network-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: afxdpoperatorconfig-viewer-role
+rules:
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpoperatorconfigs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - hns.dev
+  resources:
+  - afxdpoperatorconfigs/status
+  verbs:
+  - get

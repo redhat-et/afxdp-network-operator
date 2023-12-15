@@ -1,0 +1,12 @@
+apiVersion: hns.dev/v1alpha1
+kind: Afxdp
+metadata:
+  labels:
+    app.kubernetes.io/name: afxdp
+    app.kubernetes.io/instance: afxdp-sample
+    app.kubernetes.io/part-of: afxdp-network-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: afxdp-network-operator
+  name: afxdp-sample
+spec:
+  # TODO(user): Add fields here

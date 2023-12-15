@@ -1,0 +1,102 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.1
+  creationTimestamp: null
+  name: afxdpnetworks.hns.dev
+spec:
+  group: hns.dev
+  names:
+    kind: AfxdpNetwork
+    listKind: AfxdpNetworkList
+    plural: afxdpnetworks
+    singular: afxdpnetwork
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AfxdpNetwork is the Schema for the afxdpnetworks API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AfxdpNetworkSpec defines the desired state of AfxdpNetwork
+              It is primarily used to generate a NetworkAttachmentDefinition CR with
+              an AF_XDP CNI plugin configuration.
+            properties:
+              capabilities:
+                description: 'Capabilities to be configured for this AfxdpNetwork
+                  network. Capabilities supported: (mappinning|bpfman|udsserver),
+                  e.g. ''{"mappinning": true}'''
+                type: string
+              dpSyncer:
+                description: EthtoolCmds specifies whether or not to use a syncer
+                  with the AF_XDP DP.
+                type: boolean
+              ethtoolCmds:
+                description: EthtoolCmds specifies the ethtool cmds to be issued by
+                  the AF_XDP CNI on netdevs in this network.
+                items:
+                  type: string
+                type: array
+              ipam:
+                description: IPAM configuration to be used for this network.
+                type: string
+              linkState:
+                description: PF/SF link state (enable|disable|auto)
+                enum:
+                - auto
+                - enable
+                - disable
+                type: string
+              logFile:
+                description: LogFile sets the log file of the AF_XDP CNI logs. If
+                  unset (default), this will log to stderr and thus to multus and
+                  container runtime logs.
+                type: string
+              logLevel:
+                default: info
+                description: LogLevel sets the log level of the AF_XDP CNI - either
+                  of panic, error, warning, info, debug. Defaults to info if left
+                  blank.
+                enum:
+                - panic
+                - error
+                - warning
+                - info
+                - debug
+                - ""
+                type: string
+              mode:
+                default: primary
+                description: Mode sets the mode of the  AF_XDP CNI.
+                enum:
+                - primary
+                - cdq
+                - ""
+                type: string
+              networkNamespace:
+                description: Namespace of the NetworkAttachmentDefinition custom resource
+                type: string
+            type: object
+          status:
+            description: AfxdpNetworkStatus defines the observed state of AfxdpNetwork
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

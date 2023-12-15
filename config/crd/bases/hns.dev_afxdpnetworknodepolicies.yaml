@@ -1,0 +1,201 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.1
+  creationTimestamp: null
+  name: afxdpnetworknodepolicies.hns.dev
+spec:
+  group: hns.dev
+  names:
+    kind: AfxdpNetworkNodePolicy
+    listKind: AfxdpNetworkNodePolicyList
+    plural: afxdpnetworknodepolicies
+    singular: afxdpnetworknodepolicy
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AfxdpNetworkNodePolicy is the Schema for the afxdpnetworknodepolicies
+          API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AfxdpNetworkNodePolicySpec defines the desired state of AfxdpNetworkNodePolicy
+            properties:
+              excludeTopology:
+                description: NumSfs int `json:"numSfs"` Exclude device's NUMA node
+                  when advertising this resource by af_xdp device plugin. Default
+                  to false.
+                type: boolean
+              mtu:
+                description: MTU of PF/SF
+                minimum: 1
+                type: integer
+              nodeSelector:
+                additionalProperties:
+                  type: string
+                description: NodeSelector selects the nodes to be configured
+                type: object
+              pools:
+                items:
+                  properties:
+                    bpfMapPinning:
+                      default: disable
+                      description: BpfMapPinning configures map pinning for the the
+                        AF_XDP DP (enable|disable)
+                      enum:
+                      - enable
+                      - disable
+                      type: boolean
+                    mode:
+                      default: primary
+                      description: Mode sets the mode of the AF_XDP Device Pool.
+                      enum:
+                      - primary
+                      - cdq
+                      - ""
+                      type: string
+                    name:
+                      type: string
+                    nicSelector:
+                      description: NicSelector selects the NICs to be configured
+                      properties:
+                        Devices:
+                          items:
+                            properties:
+                              macAddress:
+                                description: MacAddress is the netdev MAC address
+                                type: string
+                              name:
+                                description: Name is the netdev name
+                                type: string
+                              pciAddress:
+                                description: PciAddress is the netdev PCI address
+                                type: string
+                              sfs:
+                                description: Sfs is the number of subfunctions configured
+                                  on this netdev
+                                type: integer
+                            required:
+                            - macAddress
+                            - name
+                            - pciAddress
+                            - sfs
+                            type: object
+                          type: array
+                        Drivers:
+                          items:
+                            properties:
+                              excludeAddressed:
+                                default: false
+                                description: if ExcludeAddressed == true, does **not**
+                                  add any device with an IPv4 address to the pool.
+                                type: boolean
+                              excludeDevices:
+                                description: Any primary device identified in the
+                                  ExcludeDevices array will **not** be added to the
+                                  pool.
+                                items:
+                                  properties:
+                                    macAddress:
+                                      description: MacAddress is the netdev MAC address
+                                      type: string
+                                    name:
+                                      description: Name is the netdev name
+                                      type: string
+                                    pciAddress:
+                                      description: PciAddress is the netdev PCI address
+                                      type: string
+                                    sfs:
+                                      description: Sfs is the number of subfunctions
+                                        configured on this netdev
+                                      type: integer
+                                  required:
+                                  - macAddress
+                                  - name
+                                  - pciAddress
+                                  - sfs
+                                  type: object
+                                type: array
+                              name:
+                                description: Name is the driver name
+                                type: string
+                              sfs:
+                                description: Sfs is the number of subfunctions configured
+                                  on this netdev
+                                type: integer
+                            required:
+                            - excludeAddressed
+                            - excludeDevices
+                            - name
+                            - sfs
+                            type: object
+                          type: array
+                      required:
+                      - Devices
+                      - Drivers
+                      type: object
+                    numPrimary:
+                      description: NumPrimary defines the maximum number of primary
+                        devices this pool will take, per node.
+                      type: integer
+                    numSfs:
+                      description: NumSfs sets the maximum number of secondary devices
+                        this pool will create, per primary device.
+                      type: integer
+                    udsServer:
+                      default: enable
+                      description: udsServer configures UDS handshaking with the AF_XDP
+                        DP (enable|disable)
+                      enum:
+                      - enable
+                      - disable
+                      type: boolean
+                    udsTimeout:
+                      description: UdsTimeout defines the wait time for the AF_XDP
+                        on a UDS for a handshake to initiate.
+                      type: integer
+                  required:
+                  - bpfMapPinning
+                  - mode
+                  - name
+                  - nicSelector
+                  - numPrimary
+                  - numSfs
+                  - udsServer
+                  - udsTimeout
+                  type: object
+                type: array
+              priority:
+                description: Priority of the policy, higher priority policies can
+                  override lower ones.
+                maximum: 99
+                minimum: 0
+                type: integer
+            required:
+            - nodeSelector
+            - pools
+            type: object
+          status:
+            description: AfxdpNetworkNodePolicyStatus defines the observed state of
+              AfxdpNetworkNodePolicy
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
